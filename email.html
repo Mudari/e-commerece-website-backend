@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Us By Email </title>
+    <link rel="stylesheet" href="css/contactUs.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <link rel="icon" href="images/shopping-cart (3).png">
+    <style>
+        /* Your CSS styles */
+      .container {
+        width: 100%;
+        height: 100vh;
+        background: rgb(255, 255, 255);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    form {
+        background: white;
+        display: flex;
+        flex-direction: column;
+        padding: 2vw 4vw;
+        width: 90%;
+        max-width: 600px;
+        border-radius: 10px;
+        align-items: center; /* Center content horizontally */
+    }
+    form input, form textarea {
+        border: 0px;
+        margin: 10px;
+        padding: 20px;
+        outline: none;
+        background: rgb(220, 221, 215);
+        font-size: 16px;
+        width: 100%; /* Make input fields full-width */
+        box-sizing: border-box; /* Include padding and border in width */
+    }
+    form button {
+        padding: 15px;
+        background: #f0cf15;
+        color:black;
+        font-size: 18px;
+        border: 0;
+        outline: none;
+        cursor: pointer;
+        width: 100%; /* Make button full-width */
+        box-sizing: border-box; /* Include padding and border in width */
+    }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <form onsubmit="sendEmail(); reset();return false;">
+            <h3>Order Us By Email</h3>
+            <input type="text" id="sendername" placeholder="Your name" required>
+            <input type="email" id="to" placeholder="Your email" required>
+            <input type="number" id="Phone_number" placeholder="Your Phone Number">
+            <input type="text" id="Device_name" placeholder="Clothes For(Male/Female/Kids): ">
+            <textarea id="subject" rows="4" placeholder="Types of Clothes(Jeans/Shirts/Kurta/Saree..)"></textarea><br />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="https://smtpjs.com/v3/smtp.js"></script> 
+    <script>
+        function sendEmail() {
+          (function(){
+            emailjs.init("gizV44zgbaK6P5sHA");
+          })();
+          var params={
+            sendername:document.querySelector("#sendername").value,
+            to:document.querySelector("#to").value,
+            Phone_number:document.querySelector("#Phone_number").value,
+            Device_name:document.querySelector("#Device_name").value,
+            subject:document.querySelector("#subject").value,
+          };
+          var service="service_wnckohp";
+          var template="template_4kbywaq";
+          emailjs.send(service,template,params)
+          .then(res=>{
+                alert("Email sent succcessfully");
+          })
+          .catch();
+}
+document.addEventListener("DOMContentLoaded", function() {
+    var urlParams = new URLSearchParams(window.location.search);
+    var cartItems = urlParams.get('cart');
+
+    if (cartItems) {
+        var cart = JSON.parse(decodeURIComponent(cartItems));
+        var productNames = cart.map(item => item.name).join(', ');
+
+        // Populate the form fields with the cart items
+        document.getElementById('subject').value = productNames;
+    }
+});
+
+
+
+    </script>
+</body>
+</html>
